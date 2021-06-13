@@ -12,8 +12,18 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - image: debian-testing
+          - image: ubuntu-cowbuilder
           - image: ubuntu-impish
           - image: ubuntu-hirsute
+          - image: ubuntu-groovy
+          - image: ubuntu-focal-plus
+          - image: ubuntu-focal
+          - image: ubuntu-bionic
+          - image: mingw-qt5
+          - image: mingw-gtk
+          - image: mingw-gtk-rawhide
+          - image: mingw-gtk2
 
     steps:
       - name: Checkout
