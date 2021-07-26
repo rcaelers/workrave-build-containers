@@ -2,6 +2,11 @@ FROM fedora:rawhide
 
 MAINTAINER Rob Caelers <rob.caelers@gmail.com>
 
+ARG GIT_COMMIT_HASH
+ENV WORKRAVE_CONTAINER_COMMIT=${GIT_COMMIT_HASH}
+RUN mkdir /workrave && \
+    echo ${GIT_COMMIT_HASH} > /workrave/container-commit
+
 RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
     dnf -y upgrade && dnf clean all && \
     dnf -y install \

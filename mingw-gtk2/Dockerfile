@@ -2,6 +2,11 @@ FROM ubuntu:focal
 
 MAINTAINER Rob Caelers <rob.caelers@gmail.com>
 
+ARG GIT_COMMIT_HASH
+ENV WORKRAVE_CONTAINER_COMMIT=${GIT_COMMIT_HASH}
+RUN mkdir /workrave && \
+    echo ${GIT_COMMIT_HASH} > /workrave/container-commit
+
 RUN sed -i 's:^path-exclude=/usr/share/locale:#path-exclude=/usr/share/locale:' /etc/dpkg/dpkg.cfg.d/excludes && \
     export DEBIAN_FRONTEND=noninteractive && \
     echo 'Acquire::Languages "none";' | tee /etc/apt/apt.conf.d/99translations > /dev/null && \

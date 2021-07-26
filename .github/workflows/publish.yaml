@@ -45,6 +45,8 @@ jobs:
         with:
           context: ./${{ matrix.image }}/
           file: ./${{ matrix.image }}/Dockerfile
+          build-args: |
+            GIT_COMMIT_HASH=${{ github.sha }}
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/workrave-build:${{ matrix.image }}
 

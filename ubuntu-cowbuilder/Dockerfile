@@ -2,6 +2,11 @@ FROM ubuntu:groovy
 
 LABEL maintainer "Rob Caelers <rob.caelers@gmail.com>"
 
+ARG GIT_COMMIT_HASH
+ENV WORKRAVE_CONTAINER_COMMIT=${GIT_COMMIT_HASH}
+RUN mkdir /workrave && \
+    echo ${GIT_COMMIT_HASH} > /workrave/container-commit
+
 RUN \
   export DEBIAN_FRONTEND=noninteractive && \
   apt-get update -y && \
@@ -10,7 +15,7 @@ RUN \
 
 COPY pbuilderrc /root/.pbuilderrc
 
-RUN for dist in hirsute groovy focal bionic xenial unstable testing stable; do \
+RUN for dist in hirsute groovy focal bionic unstable testing stable; do \
        DIST=$dist cowbuilder --create --distribution $dist --basepath /var/cache/pbuilder/base-$dist.cow; \
     done
 
