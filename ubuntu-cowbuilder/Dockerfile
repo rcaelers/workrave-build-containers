@@ -1,4 +1,4 @@
-FROM ubuntu:groovy
+FROM ubuntu:impish
 
 LABEL maintainer "Rob Caelers <rob.caelers@gmail.com>"
 
