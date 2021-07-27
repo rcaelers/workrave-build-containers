@@ -82,6 +82,6 @@ RUN \
 RUN pip3 install --upgrade pip
 RUN pip3 install Jinja2
 
-RUN 
+RUN ln -s /usr/bin/ninja /usr/bin/ninja-build
 
 CMD ["/bin/bash"]
