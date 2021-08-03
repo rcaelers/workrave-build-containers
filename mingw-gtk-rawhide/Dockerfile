@@ -8,7 +8,8 @@ RUN mkdir /workrave && \
     echo ${GIT_COMMIT_HASH} > /workrave/container-commit
 
 RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
-    dnf -y upgrade && dnf clean all && \
+    dnf check-update \
+    cat cat /etc/resolv.conf \
     dnf -y install \
                 autoconf-archive \
                 bzip2 \
@@ -49,7 +50,11 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
                 tar \
                 which \
                 wine \
-                xz
+                xz && \
+    cat cat /etc/resolv.conf \
+    dnf -y upgrade && \
+    cat cat /etc/resolv.conf \
+    dnf -y clean all
 
 RUN mkdir -p /workspace
 
