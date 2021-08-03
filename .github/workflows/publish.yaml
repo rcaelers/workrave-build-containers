@@ -24,7 +24,6 @@ jobs:
           - image: ubuntu-focal
           - image: ubuntu-bionic
           - image: mingw-gtk-rawhide
-          - image: mingw-gtk2
 
     steps:
       - name: Checkout
