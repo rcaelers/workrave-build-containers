@@ -7,12 +7,14 @@ ENV WORKRAVE_CONTAINER_COMMIT=${GIT_COMMIT_HASH}
 RUN mkdir /workrave && \
     echo ${GIT_COMMIT_HASH} > /workrave/container-commit
 
-RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
-    dnf clean all && \
-    cat /etc/resolv.conf && \
-    dnf -y update && \
-    cat /etc/resolv.conf && \
-    dnf -y install \
+RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf
+RUN     dnf clean all
+RUN     cat /etc/resolv.conf
+RUN     dnf -y update
+RUN     dnf -y install wget 
+RUN     wget "https://mirrors.fedoraproject.org/metalink?repo=rawhide&arch=x86_64"
+RUN     cat /etc/resolv.conf
+RUN     dnf -y install \
                 bzip2 \
                 clang \
                 cmake \
@@ -39,9 +41,9 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
                 tar \
                 which \
                 wine-core.i686 \
-                xz && \
-    cat /etc/resolv.conf && \
-    dnf -y clean all
+                xz
+RUN     cat /etc/resolv.conf
+RUN     dnf -y clean all
 
 RUN mkdir -p /workspace
 
