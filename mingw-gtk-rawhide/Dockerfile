@@ -9,7 +9,9 @@ RUN mkdir /workrave && \
 
 RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
     dnf clean all && \
+    cat /etc/resolv.conf && \
     dnf -y update && \
+    cat /etc/resolv.conf && \
     dnf -y install \
                 bzip2 \
                 clang \
