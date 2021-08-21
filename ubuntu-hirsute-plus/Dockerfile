@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM ubuntu:hirsute
 
 LABEL maintainer "Rob Caelers <rob.caelers@gmail.com>"
 
@@ -13,7 +13,7 @@ RUN \
   apt-get update -y && \
   apt-get install -y curl software-properties-common && \
   curl https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
-  add-apt-repository "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-10 main" && \
+  add-apt-repository "deb http://apt.llvm.org/hirsute/ llvm-toolchain-hirsute-13 main" && \
   apt-get update -y && \
   apt-get --no-install-recommends install -y \
     autoconf \
@@ -21,7 +21,7 @@ RUN \
     automake \
     autopoint \
     build-essential \
-    clang-10 \
+    clang-13 \
     cmake \
     debhelper \
     devscripts \
@@ -34,6 +34,7 @@ RUN \
     gsettings-desktop-schemas-dev \
     intltool \
     jq \
+    libayatana-indicator3-dev \
     libboost-chrono-dev \
     libboost-context-dev \
     libboost-coroutine-dev \
@@ -48,12 +49,12 @@ RUN \
     libdbusmenu-glib-dev \
     libdbusmenu-gtk3-dev \
     libgirepository1.0-dev \
+    libgnome-panel-dev \
     libgstreamer1.0-dev \
     libgtk-3-dev \
     libgtkmm-3.0-dev \
     libindicator3-dev \
     libmate-panel-applet-dev \
-    libpanel-applet-dev \
     libpulse-dev \
     libqt5svg5-dev \
     libqt5x11extras5-dev \
@@ -65,17 +66,17 @@ RUN \
     libxss-dev \
     libxtst-dev \
     ninja-build \
+    nodejs \
+    npm \
     python3-pip \
     python3-setuptools \
+    python3-paramiko \
+    python3-jinja2 \
     qtbase5-dev \
     qtbase5-dev-tools \
     qtbase5-private-dev \
     qttools5-dev \
-    qttools5-dev-tools \
-    xfce4-panel-dev && \
+    qttools5-dev-tools && \
   apt-get clean
-
-RUN pip3 install --upgrade pip
-RUN pip3 install Jinja2
 
 CMD ["/bin/bash"]

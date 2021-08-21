@@ -10,6 +10,7 @@ RUN mkdir /workrave && \
 RUN \
   export DEBIAN_FRONTEND=noninteractive && \
   apt-get update -y && \
+  apt-get dist-upgrade -y && \
   apt-get install -y \
     autoconf \
     autoconf-archive \
@@ -26,6 +27,7 @@ RUN \
     gsettings-desktop-schemas-dev \
     intltool \
     jq \
+    libayatana-indicator3-dev \
     libboost-chrono-dev \
     libboost-context-dev \
     libboost-coroutine-dev \

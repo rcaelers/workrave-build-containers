@@ -40,6 +40,7 @@ RUN \
     gsettings-desktop-schemas-dev \
     intltool \
     jq \
+    libayatana-indicator3-dev \
     libboost-chrono-dev \
     libboost-context-dev \
     libboost-coroutine-dev \

@@ -20,10 +20,9 @@ jobs:
           - image: ubuntu-impish
           - image: ubuntu-hirsute
           - image: ubuntu-groovy
-          - image: ubuntu-focal-plus
           - image: ubuntu-focal
           - image: ubuntu-bionic
-          #- image: mingw-gtk-rawhide
+          - image: mingw-gtk-rawhide
 
     steps:
       - name: Checkout
