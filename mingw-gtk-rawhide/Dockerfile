@@ -16,6 +16,7 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
                 cmake \
                 dos2unix \
                 gcc \
+                gettext \
                 git \
                 gobject-introspection-devel \
                 gtk-update-icon-cache \
