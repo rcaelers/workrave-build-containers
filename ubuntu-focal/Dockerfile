@@ -12,6 +12,7 @@ RUN \
   apt-get update -y && \
   apt-get dist-upgrade -y && \
   apt-get install -y \
+    appstream \
     autoconf \
     autoconf-archive \
     automake \
@@ -51,6 +52,7 @@ RUN \
     libpulse-dev \
     libqt5svg5-dev \
     libqt5x11extras5-dev \
+    librsvg2-dev \
     libssl-dev \
     libtool \
     libxfce4panel-2.0-dev \
@@ -61,10 +63,11 @@ RUN \
     ninja-build \
     nodejs \
     npm \
+    patchelf \
+    python3-jinja2 \
+    python3-paramiko \
     python3-pip \
     python3-setuptools \
-    python3-paramiko \
-    python3-jinja2 \
     qtbase5-dev \
     qtbase5-dev-tools \
     qtbase5-private-dev \

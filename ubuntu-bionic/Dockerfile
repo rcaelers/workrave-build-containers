@@ -23,6 +23,7 @@ RUN \
   export DEBIAN_FRONTEND=noninteractive && \
   apt-get update -y && \
   apt-get install -y \
+    appstream \
     autoconf \
     autoconf-archive \
     automake \
@@ -64,6 +65,7 @@ RUN \
     libpulse-dev \
     libqt5svg5-dev \
     libqt5x11extras5-dev \
+    librsvg2-dev \
     libssl-dev \
     libtool \
     libxfce4panel-2.0-dev \
@@ -72,6 +74,7 @@ RUN \
     libxss-dev \
     libxtst-dev \
     ninja-build \
+    patchelf \
     python3-pip \
     python3-setuptools \
     qtbase5-dev \
