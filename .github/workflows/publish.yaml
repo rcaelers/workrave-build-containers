@@ -17,6 +17,7 @@ jobs:
           - image: mingw-gtk
           - image: debian-testing
           - image: ubuntu-cowbuilder
+          - image: ubuntu-jammy
           - image: ubuntu-impish
           - image: ubuntu-hirsute
           - image: ubuntu-groovy
