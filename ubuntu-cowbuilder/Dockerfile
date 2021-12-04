@@ -15,7 +15,7 @@ RUN \
 
 COPY pbuilderrc /root/.pbuilderrc
 
-RUN for dist in impish hirsute focal bionic unstable testing stable; do \
+RUN for dist in jammy impish hirsute focal bionic unstable testing stable; do \
        DIST=$dist cowbuilder --create --distribution $dist --basepath /var/cache/pbuilder/base-$dist.cow; \
     done
 
