@@ -58,6 +58,7 @@ RUN \
     libpulse-dev \
     libqt5svg5-dev \
     libqt5x11extras5-dev \
+    libspdlog-dev \
     libssl-dev \
     libtool \
     libxfce4panel-2.0-dev \

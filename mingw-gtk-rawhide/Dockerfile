@@ -26,6 +26,7 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
                 mingw32-gcc \
                 mingw32-gcc-c++ \
                 mingw64-boost \
+                mingw64-boost-static \
                 mingw64-gcc \
                 mingw64-gcc-c++ \
                 mingw64-gettext \

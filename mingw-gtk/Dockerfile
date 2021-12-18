@@ -26,6 +26,7 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
                 lld \
                 make \
                 mingw32-boost \
+                mingw64-boost-static \
                 mingw32-dbus \
                 mingw32-gcc \
                 mingw32-gcc-c++ \
