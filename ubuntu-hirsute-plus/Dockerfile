@@ -26,6 +26,7 @@ RUN \
     debhelper \
     devscripts \
     dh-autoreconf \
+    fuse \
     g++-10 \
     gcc-10 \
     gettext \

@@ -22,6 +22,7 @@ RUN \
     debhelper \
     devscripts \
     dh-autoreconf \
+    fuse \
     gettext \
     git \
     gobject-introspection \
