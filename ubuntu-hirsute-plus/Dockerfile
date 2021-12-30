@@ -43,6 +43,7 @@ RUN \
     libboost-dev \
     libboost-filesystem-dev \
     libboost-log-dev \
+    libboost-program-options-dev \
     libboost-regex-dev \
     libboost-system-dev \
     libboost-test-dev \
