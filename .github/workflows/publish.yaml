@@ -20,7 +20,6 @@ jobs:
           - image: ubuntu-jammy
           - image: ubuntu-impish
           - image: ubuntu-hirsute
-          - image: ubuntu-groovy
           - image: ubuntu-focal
           - image: ubuntu-bionic
           - image: mingw-gtk-rawhide
