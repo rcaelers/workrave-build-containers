@@ -16,6 +16,7 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
                 cmake \
                 dos2unix \
                 gcc \
+                gettext \
                 git \
                 gobject-introspection-devel \
                 gtk-update-icon-cache \
@@ -25,18 +26,19 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
                 libtool \
                 lld \
                 make \
+                mingw32-adwaita-icon-theme \
                 mingw32-boost \
-                mingw64-boost-static \
                 mingw32-dbus \
                 mingw32-gcc \
                 mingw32-gcc-c++ \
                 mingw32-gettext \
-                mingw32-gtkmm30 \
                 mingw32-gtkmm24 \
+                mingw32-gtkmm30 \
                 mingw32-librsvg2 \
                 mingw32-openssl \
-                mingw32-adwaita-icon-theme \
+                mingw64-adwaita-icon-theme \
                 mingw64-boost \
+                mingw64-boost-static \
                 mingw64-dbus \
                 mingw64-gcc \
                 mingw64-gcc-c++ \
@@ -44,7 +46,6 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
                 mingw64-gtkmm30 \
                 mingw64-librsvg2 \
                 mingw64-openssl \
-                mingw64-adwaita-icon-theme \
                 ninja-build \
                 python3-pip \
                 tar \

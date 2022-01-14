@@ -23,8 +23,11 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
                 innoextract \
                 jq \
                 lld \
+                mingw32-boost \
+                mingw32-boost-static \
                 mingw32-gcc \
                 mingw32-gcc-c++ \
+                mingw64-adwaita-icon-theme \
                 mingw64-boost \
                 mingw64-boost-static \
                 mingw64-gcc \
@@ -32,7 +35,6 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
                 mingw64-gettext \
                 mingw64-gtkmm30 \
                 mingw64-librsvg2 \
-                mingw64-adwaita-icon-theme \
                 ninja-build \
                 python3-jinja2 \
                 python3-pip \
