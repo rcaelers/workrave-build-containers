@@ -1,4 +1,4 @@
-FROM ubuntu:impish
+FROM ubuntu:jammy
 
 LABEL maintainer "Rob Caelers <rob.caelers@gmail.com>"
 
