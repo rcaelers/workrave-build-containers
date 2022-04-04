@@ -19,7 +19,6 @@ jobs:
           - image: ubuntu-cowbuilder
           - image: ubuntu-jammy
           - image: ubuntu-impish
-          - image: ubuntu-hirsute
           - image: ubuntu-focal
           - image: ubuntu-bionic
           - image: mingw-gtk-rawhide
