@@ -1,4 +1,4 @@
-FROM fedora:rawhide
+FROM fedora:34
 
 MAINTAINER Rob Caelers <rob.caelers@gmail.com>
 
@@ -11,6 +11,7 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
     dnf clean all && \
     dnf -y update && \
     dnf -y install \
+                autoconf-archive \
                 bzip2 \
                 clang \
                 cmake \
@@ -21,28 +22,37 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
                 gobject-introspection-devel \
                 gtk-update-icon-cache \
                 innoextract \
+                intltool \
                 jq \
+                libtool \
                 lld \
+                make \
+                mingw32-adwaita-icon-theme \
                 mingw32-boost \
-                mingw32-boost-static \
+                mingw32-dbus \
                 mingw32-gcc \
                 mingw32-gcc-c++ \
+                mingw32-gettext \
+                mingw32-gtkmm24 \
+                mingw32-gtkmm30 \
+                mingw32-librsvg2 \
+                mingw32-openssl \
                 mingw64-adwaita-icon-theme \
                 mingw64-boost \
                 mingw64-boost-static \
+                mingw64-dbus \
                 mingw64-gcc \
                 mingw64-gcc-c++ \
                 mingw64-gettext \
                 mingw64-gtkmm30 \
                 mingw64-librsvg2 \
+                mingw64-openssl \
                 ninja-build \
-                python3-jinja2 \
                 python3-pip \
                 tar \
                 which \
-                wine-core.i686 \
-                xz && \
-    dnf -y clean all
+                wine \
+                xz
 
 RUN mkdir -p /workspace
 
@@ -70,3 +80,6 @@ RUN cd /workspace && \
     tar xvfz dump_syms-linux-x86_64.tar.gz && \
     cp -a dump_syms-linux-x86_64/dump_syms /usr/local/bin && \
     rm -rf dump_syms-linux-x86_64.tar.gz dump_syms-linux-x86_64
+
+RUN pip3 install --upgrade pip
+RUN pip3 install Jinja2

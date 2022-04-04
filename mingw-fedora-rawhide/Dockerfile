@@ -1,4 +1,4 @@
-FROM fedora:34
+FROM fedora:rawhide
 
 MAINTAINER Rob Caelers <rob.caelers@gmail.com>
 
@@ -8,35 +8,54 @@ RUN mkdir /workrave && \
     echo ${GIT_COMMIT_HASH} > /workrave/container-commit
 
 RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
-    dnf -y upgrade && dnf clean all && \
+    dnf clean all && \
+    dnf -y update && \
     dnf -y install \
                 bzip2 \
                 clang \
                 cmake \
                 dos2unix \
                 gcc \
+                gettext \
                 git \
-                intltool \
+                gobject-introspection-devel \
+                gtk-update-icon-cache \
+                innoextract \
                 jq \
                 lld \
-                make \
+                mingw32-boost \
+                mingw32-boost-static \
                 mingw32-gcc \
                 mingw32-gcc-c++ \
+                mingw64-adwaita-icon-theme \
                 mingw64-boost \
                 mingw64-boost-static \
-                mingw64-dbus \
                 mingw64-gcc \
                 mingw64-gcc-c++ \
-                mingw64-qt5-qttools \
-                mingw64-qt5-qtbase-devel \
-                mingw64-qt5-qtsvg \
+                mingw64-gettext \
+                mingw64-gtkmm30 \
+                mingw64-librsvg2 \
+                mingw64-qt6-qtbase \
+                mingw64-qt6-qtimageformats \
+                mingw64-qt6-qtsvg \
+                mingw64-qt6-qttools \
                 ninja-build \
+                python3-jinja2 \
                 python3-pip \
                 tar \
-                xz
+                which \
+                wine-core.i686 \
+                xz && \
+    dnf -y clean all
 
-RUN mkdir -p /workspace && \
-    cd /workspace && \
+RUN mkdir -p /workspace
+
+RUN cd /workspace && \
+    curl -O http://files.jrsoftware.org/is/6/innosetup-6.2.0.exe && \
+    innoextract -d /workspace/inno ./innosetup-6.2.0.exe && \
+    rm ./innosetup-6.2.0.exe
+
+RUN cd /workspace && \
     curl -O https://snapshots.workrave.org/prebuilt/workrave-prebuilt-windows-vs2015.tar.xz && \
     tar xvfJ ./workrave-prebuilt-windows-vs2015.tar.xz && \
     rm ./workrave-prebuilt-windows-vs2015.tar.xz && \
@@ -55,6 +74,3 @@ RUN cd /workspace && \
     tar xvfz dump_syms-linux-x86_64.tar.gz && \
     cp -a dump_syms-linux-x86_64/dump_syms /usr/local/bin && \
     rm -rf dump_syms-linux-x86_64.tar.gz dump_syms-linux-x86_64
-
-RUN pip3 install --upgrade pip
-RUN pip3 install Jinja2
