@@ -19,7 +19,6 @@ jobs:
           - image: ubuntu-cowbuilder
           - image: ubuntu-bionic
           - image: ubuntu-focal
-          - image: ubuntu-impish
           - image: ubuntu-jammy
           - image: ubuntu-kinetic
 
