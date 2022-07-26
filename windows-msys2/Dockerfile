@@ -58,7 +58,7 @@ RUN [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tl
     Start-Process ./innosetup.exe -ArgumentList '/VERYSILENT /NORESTART /NOICONS /ALLUSERS /SUPPRESSMSGBOXES /NOCANCEL /SP-' -Wait ; \
     Remove-Item -Path c:\innosetup.exe -Force;
 
-RUN $env:PATH =  $env:PATH + ';c:\msys64\usr\bin;c:\msys64\mingw64\bin;';   \
+RUN $env:PATH =  $env:PATH + ';c:\msys64\usr\bin;c:\msys64\clang64\bin;';   \
     [Environment]::SetEnvironmentVariable('PATH', $env:PATH, [EnvironmentVariableTarget]::Machine);
 
 ENV MSYS2_PATH_TYPE=inherit
