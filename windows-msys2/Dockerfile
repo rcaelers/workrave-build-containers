@@ -62,4 +62,5 @@ RUN $env:PATH =  $env:PATH + ';c:\msys64\usr\bin;c:\msys64\clang64\bin;';   \
     [Environment]::SetEnvironmentVariable('PATH', $env:PATH, [EnvironmentVariableTarget]::Machine);
 
 ENV MSYS2_PATH_TYPE=inherit
+ENV MINGW_PREFIX=/c/msys64/clang64
 CMD ["bash.exe", "--login"]
