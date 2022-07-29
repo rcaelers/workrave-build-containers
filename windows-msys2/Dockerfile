@@ -61,6 +61,12 @@ RUN [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tl
 RUN $env:PATH =  $env:PATH + ';c:\msys64\usr\bin;c:\msys64\clang64\bin;';   \
     [Environment]::SetEnvironmentVariable('PATH', $env:PATH, [EnvironmentVariableTarget]::Machine);
 
+RUN function msys() { C:\msys64\usr\bin\bash.exe @('-lc') + @Args; } \
+    msys ' '; \
+    msys 'python -m pip install --upgrade pip'; \
+    msys 'pip install wheel'; \
+    msys 'pip install Jinja2';
+
 ENV MSYS2_PATH_TYPE=inherit
 ENV MINGW_PREFIX=/c/msys64/clang64
 CMD ["bash.exe", "--login"]
