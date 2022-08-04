@@ -15,7 +15,7 @@ RUN \
 
 COPY pbuilderrc /root/.pbuilderrc
 
-RUN for dist in kinetic jammy impish focal bionic unstable testing stable; do \
+RUN for dist in kinetic jammy focal bionic unstable testing stable; do \
        DIST=$dist cowbuilder --create --distribution $dist --basepath /var/cache/pbuilder/base-$dist.cow; \
     done
 
