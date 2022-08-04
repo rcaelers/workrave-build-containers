@@ -12,6 +12,7 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
     dnf -y update && \
     dnf -y install \
                 bzip2 \
+                cargo \
                 clang \
                 cmake \
                 dos2unix \
@@ -42,6 +43,7 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
                 ninja-build \
                 python3-jinja2 \
                 python3-pip \
+                rust \
                 tar \
                 which \
                 wine-core.i686 \

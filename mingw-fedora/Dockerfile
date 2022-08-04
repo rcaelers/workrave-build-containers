@@ -13,6 +13,7 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
     dnf -y install \
                 autoconf-archive \
                 bzip2 \
+                cargo \
                 clang \
                 cmake \
                 dos2unix \
@@ -49,6 +50,7 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
                 mingw64-openssl \
                 ninja-build \
                 python3-pip \
+                rust \
                 tar \
                 which \
                 wine \
