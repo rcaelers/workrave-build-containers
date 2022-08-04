@@ -57,8 +57,8 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
 RUN mkdir -p /workspace
 
 RUN cd /workspace && \
-    curl -O http://files.jrsoftware.org/is/6/innosetup-6.2.0.exe && \
-    innoextract -d /workspace/inno ./innosetup-6.2.0.exe && \
+    curl -O http://files.jrsoftware.org/is/6/innosetup-6.2.1.exe && \
+    innoextract -d /workspace/inno ./innosetup-6.2.1.exe && \
     rm ./innosetup-6.2.0.exe
 
 RUN cd /workspace && \
