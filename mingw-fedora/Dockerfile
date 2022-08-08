@@ -54,7 +54,9 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
                 tar \
                 which \
                 wine \
-                xz
+                xz \
+                zstd && \
+    dnf -y clean all
 
 RUN mkdir -p /workspace
 

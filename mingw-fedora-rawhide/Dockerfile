@@ -47,7 +47,8 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
                 tar \
                 which \
                 wine-core.i686 \
-                xz && \
+                xz \
+                zstd && \
     dnf -y clean all
 
 RUN mkdir -p /workspace
