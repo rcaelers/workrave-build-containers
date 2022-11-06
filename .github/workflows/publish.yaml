@@ -17,10 +17,10 @@ jobs:
           - image: mingw-fedora
           - image: mingw-fedora-rawhide
           - image: ubuntu-cowbuilder
-          - image: ubuntu-bionic
           - image: ubuntu-focal
           - image: ubuntu-jammy
           - image: ubuntu-kinetic
+          - image: ubuntu-lunar
 
     steps:
       - name: Checkout
