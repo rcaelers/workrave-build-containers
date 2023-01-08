@@ -75,7 +75,8 @@ RUN \
     qtbase5-dev-tools \
     qtbase5-private-dev \
     qttools5-dev \
-    qttools5-dev-tools && \
+    qttools5-dev-tools \
+    xz && \
   apt-get clean
 
 CMD ["/bin/bash"]
