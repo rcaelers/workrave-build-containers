@@ -77,7 +77,7 @@ RUN \
     qttools5-dev \
     qttools5-dev-tools \
     xfce4-panel-dev \
-    xz && \
+    xz-utils && \
   apt-get clean
 
 CMD ["/bin/bash"]

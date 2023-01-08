@@ -82,7 +82,7 @@ RUN \
     qtbase5-private-dev \
     qttools5-dev-tools \
     xfce4-panel-dev \
-    xz && \
+    xz-utils && \
   apt-get clean
 
 RUN pip3 install --upgrade pip
