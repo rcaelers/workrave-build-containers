@@ -21,6 +21,7 @@ jobs:
           - image: ubuntu-jammy
           - image: ubuntu-kinetic
           - image: ubuntu-lunar
+          - image: ubuntu-mantic
 
     steps:
       - name: Checkout
