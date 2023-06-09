@@ -1,4 +1,4 @@
-FROM ubuntu:jammy
+FROM ubuntu:mantic
 
 LABEL maintainer "Rob Caelers <rob.caelers@gmail.com>"
 
