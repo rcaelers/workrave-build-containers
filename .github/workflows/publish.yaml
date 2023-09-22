@@ -14,8 +14,8 @@ jobs:
       matrix:
         include:
           - image: debian-testing
-          - image: mingw-fedora
-          - image: mingw-fedora-rawhide
+          #- image: mingw-fedora
+          #- image: mingw-fedora-rawhide
           - image: ubuntu-cowbuilder
           - image: ubuntu-focal
           - image: ubuntu-jammy
