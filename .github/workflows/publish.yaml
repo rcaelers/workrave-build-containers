@@ -19,7 +19,6 @@ jobs:
           - image: ubuntu-cowbuilder
           - image: ubuntu-focal
           - image: ubuntu-jammy
-          - image: ubuntu-kinetic
           - image: ubuntu-lunar
           - image: ubuntu-mantic
 
