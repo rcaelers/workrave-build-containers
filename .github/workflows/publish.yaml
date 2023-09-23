@@ -17,6 +17,7 @@ jobs:
           #- image: mingw-fedora
           #- image: mingw-fedora-rawhide
           - image: ubuntu-cowbuilder
+          - image: ubuntu-cowbuilder-arm
           - image: ubuntu-focal
           - image: ubuntu-jammy
           - image: ubuntu-lunar
