@@ -13,15 +13,15 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - image: debian-testing
+          #- image: debian-testing
           #- image: mingw-fedora
           #- image: mingw-fedora-rawhide
-          - image: ubuntu-cowbuilder
+          #- image: ubuntu-cowbuilder
           - image: ubuntu-cowbuilder-arm
-          - image: ubuntu-focal
-          - image: ubuntu-jammy
-          - image: ubuntu-lunar
-          - image: ubuntu-mantic
+          #- image: ubuntu-focal
+          #- image: ubuntu-jammy
+          #- image: ubuntu-lunar
+          #- image: ubuntu-mantic
 
     steps:
       - name: Checkout
