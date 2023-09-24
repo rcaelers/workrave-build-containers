@@ -200,9 +200,9 @@ elif $(echo ${UBUNTU_SUITES[@]} | grep -q $DIST); then
         MIRRORSITE="http://$UBUNTU_MIRROR/ubuntu/"
     elif [[ "$ARCH" == "arm64" ]]; then
         NATIVEARCH=$(dpkg --print-architecture)
-        if [[ "$NATIVEARCH" != "arm64" ]]; then
-           DEBOOTSTRAP="qemu-debootstrap"
-        fi
+        #if [[ "$NATIVEARCH" != "arm64" ]]; then
+        #   DEBOOTSTRAP="qemu-debootstrap"
+        #fi
         MIRRORSITE="http://$UBUNTU_PORTS_MIRROR/ubuntu-ports/"
     fi
 	OTHERMIRROR="deb $MIRRORSITE $DIST-security main restricted universe multiverse"
