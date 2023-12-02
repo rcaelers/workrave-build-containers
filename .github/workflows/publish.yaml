@@ -14,15 +14,25 @@ jobs:
       matrix:
         include:
           - image: debian-testing
+            platforms: linux/amd64,linux/arm64
           - image: mingw-fedora
+            platforms: linux/amd64,linux/arm64
           - image: mingw-fedora-rawhide
+            platforms: linux/amd64,linux/arm64
           - image: ubuntu-cowbuilder
+            platforms: linux/amd64
           - image: ubuntu-cowbuilder-arm
+            platforms: linux/arm64
           - image: ubuntu-focal
+            platforms: linux/amd64,linux/arm64
           - image: ubuntu-jammy
+            platforms: linux/amd64,linux/arm64
           - image: ubuntu-lunar
+            platforms: linux/amd64,linux/arm64
           - image: ubuntu-mantic
+            platforms: linux/amd64,linux/arm64
           - image: ubuntu-noble
+            platforms: linux/amd64,linux/arm64
 
     steps:
       - name: Checkout
@@ -45,7 +55,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./${{ matrix.image }}/
-          platforms: linux/amd64,linux/arm64
+          platforms: ${{ matrix.platforms }} 
           file: ./${{ matrix.image }}/Dockerfile
           build-args: |
             GIT_COMMIT_HASH=${{ github.sha }}
