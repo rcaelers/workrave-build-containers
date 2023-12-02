@@ -10,7 +10,8 @@ RUN mkdir /workrave && \
 RUN \
   export DEBIAN_FRONTEND=noninteractive && \
   apt-get update -y && \
-  apt-get install -y debian-archive-keyring cowbuilder pbuilder qemu-user-static debootstrap binfmt-support && \
+  apt-get install -y binfmt-support && \
+  apt-get install -y debian-archive-keyring cowbuilder pbuilder qemu-user-static debootstrap&& \
   apt-get clean
 
 COPY pbuilderrc /root/.pbuilderrc
