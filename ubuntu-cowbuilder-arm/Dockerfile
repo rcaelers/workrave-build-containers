@@ -16,7 +16,7 @@ RUN \
 COPY pbuilderrc /root/.pbuilderrc
 
 RUN update-binfmts --display; \
-    for dist in mantic lunar jammy focal; do \
+    for dist in noble mantic lunar jammy focal; do \
        ARCH=arm64 DIST=$dist cowbuilder --create --distribution $dist --basepath /var/cache/pbuilder/base-$dist.cow; \
     done
 

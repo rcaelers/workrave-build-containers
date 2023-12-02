@@ -22,6 +22,7 @@ jobs:
           - image: ubuntu-jammy
           - image: ubuntu-lunar
           - image: ubuntu-mantic
+          - image: ubuntu-noble
 
     steps:
       - name: Checkout

@@ -15,7 +15,7 @@ RUN \
 
 COPY pbuilderrc /root/.pbuilderrc
 
-RUN for dist in mantic lunar jammy focal; do \
+RUN for dist in noble mantic lunar jammy focal; do \
        DIST=$dist cowbuilder --create --distribution $dist --basepath /var/cache/pbuilder/base-$dist.cow; \
     done
 
