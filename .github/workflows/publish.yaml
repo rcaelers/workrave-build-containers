@@ -15,14 +15,14 @@ jobs:
         include:
           - image: debian-testing
             platforms: linux/amd64,linux/arm64
-          - image: mingw-fedora
-            platforms: linux/amd64,linux/arm64
-          - image: mingw-fedora-rawhide
-            platforms: linux/amd64,linux/arm64
+          #- image: mingw-fedora
+          #  platforms: linux/amd64,linux/arm64
+          #- image: mingw-fedora-rawhide
+          #  platforms: linux/amd64,linux/arm64
           - image: ubuntu-cowbuilder
             platforms: linux/amd64,linux/arm64
-          - image: ubuntu-cowbuilder-arm
-            platforms: linux/arm64
+          #- image: ubuntu-cowbuilder-arm
+          #  platforms: linux/arm64
           - image: ubuntu-focal
             platforms: linux/amd64,linux/arm64
           - image: ubuntu-jammy
@@ -59,6 +59,7 @@ jobs:
           file: ./${{ matrix.image }}/Dockerfile
           build-args: |
             GIT_COMMIT_HASH=${{ github.sha }}
+            ARCH=${{ matrix.platforms == 'linux/arm64' && 'arm64' || 'amd64' }}
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/workrave-build:${{ matrix.image }}
 
