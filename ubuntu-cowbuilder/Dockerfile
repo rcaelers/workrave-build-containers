@@ -3,6 +3,9 @@ FROM ubuntu:mantic
 LABEL maintainer "Rob Caelers <rob.caelers@gmail.com>"
 
 ARG GIT_COMMIT_HASH
+ARG TARGETARCH
+ARG BUILDPLATFORM
+
 ENV WORKRAVE_CONTAINER_COMMIT=${GIT_COMMIT_HASH}
 RUN mkdir /workrave && \
     echo ${GIT_COMMIT_HASH} > /workrave/container-commit
@@ -17,8 +20,8 @@ RUN \
 COPY pbuilderrc /root/.pbuilderrc
 
 RUN for dist in noble mantic lunar jammy focal; do \
-       echo Platform: $BUILDPLATFORM; \
-       ARCH=${BUILDPLATFORM} DIST=$dist cowbuilder --create --distribution $dist --basepath /var/cache/pbuilder/base-$dist.cow; \
+       echo Platform: b=${BUILDPLATFORM} a=${ARCH} t=${TARGETARCH}; \
+       DIST=$dist cowbuilder --create --distribution $dist --basepath /var/cache/pbuilder/base-$dist.cow; \
     done
 
 CMD ["/bin/bash"]
