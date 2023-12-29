@@ -10,13 +10,15 @@ RUN mkdir /workrave && \
 RUN \
   export DEBIAN_FRONTEND=noninteractive && \
   apt-get update -y && \
-  apt-get install -y debian-archive-keyring cowbuilder pbuilder && \
+  apt-get install -y debian-archive-keyring binfmt-support cowbuilder pbuilder qemu-user-static devscripts debootstrap && \
+  apt-get install -y --reinstall qemu-user-static && \
   apt-get clean
 
 COPY pbuilderrc /root/.pbuilderrc
 
 RUN for dist in noble mantic lunar jammy focal; do \
-       DIST=$dist cowbuilder --create --distribution $dist --basepath /var/cache/pbuilder/base-$dist.cow; \
+       echo Platform: $BUILDPLATFORM; \
+       ARCH=${BUILDPLATFORM} DIST=$dist cowbuilder --create --distribution $dist --basepath /var/cache/pbuilder/base-$dist.cow; \
     done
 
 CMD ["/bin/bash"]

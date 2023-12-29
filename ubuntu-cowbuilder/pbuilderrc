@@ -17,10 +17,10 @@ USECOLORS=auto
 # Codenames for Debian suites according to their alias. Update these when
 # needed.
 UNSTABLE_CODENAME="sid"
-TESTING_CODENAME="buster"
-STABLE_CODENAME="stretch"
+TESTING_CODENAME="trixie"
+STABLE_CODENAME="bookworm"
 STABLE_BACKPORTS_SUITE="$STABLE_CODENAME-backports"
-OLDSTABLE_CODENAME="jessie"
+OLDSTABLE_CODENAME="bullseye"
 
 # List of Debian suites.
 DEBIAN_SUITES=($UNSTABLE_CODENAME $TESTING_CODENAME $STABLE_CODENAME $STABLE_BACKPORTS_SUITE $OLDSTABLE_CODENAME
@@ -32,6 +32,7 @@ UBUNTU_SUITES=("noble" "mantic" "lunar" "jammy" "focal")
 # Mirrors to use. Update these to your preferred mirror.
 DEBIAN_MIRROR="deb.debian.org"
 UBUNTU_MIRROR="archive.ubuntu.com"
+UBUNTU_PORTS_MIRROR="ports.ubuntu.com"
 
 NAME="$DIST"
 if [ -n "${ARCH}" ]; then
@@ -69,7 +70,7 @@ BUILDRESULT=/var/cache/pbuilder/result/
 # DISTRIBUTION=devel
 # specifying the architecture passes --arch= to debootstrap; the default is
 # to use the architecture of the host
-#ARCHITECTURE=$(dpkg --print-architecture)
+#ARCHITECTURE=$(ARCH)
 # specifying the components of the distribution, for instance to enable all
 # components on Debian use "main contrib non-free" and on Ubuntu "main
 # restricted universe multiverse"
@@ -193,8 +194,19 @@ if $(echo ${DEBIAN_SUITES[@]} | grep -q $DIST); then
     fi
 elif $(echo ${UBUNTU_SUITES[@]} | grep -q $DIST); then
     # Ubuntu configuration
-    MIRRORSITE="http://$UBUNTU_MIRROR/ubuntu/"
     COMPONENTS="main restricted universe multiverse"
+
+    if [[ "$ARCH" == "amd64" || "$ARCH" == "i386" ]]; then
+        MIRRORSITE="http://$UBUNTU_MIRROR/ubuntu/"
+    elif [[ "$ARCH" == "arm64" ]]; then
+        NATIVEARCH=$(dpkg --print-architecture)
+        if [[ "$NATIVEARCH" != "arm64" ]]; then
+           DEBOOTSTRAP="qemu-debootstrap"
+        fi
+        MIRRORSITE="http://$UBUNTU_PORTS_MIRROR/ubuntu-ports/"
+    fi
+	OTHERMIRROR="deb $MIRRORSITE $DIST-security main restricted universe multiverse"
+	OTHERMIRROR="$OTHERMIRROR | deb $MIRRORSITE $DIST-updates main restricted universe multiverse"
 else
     echo "Unknown distribution: $DIST"
     exit 1
