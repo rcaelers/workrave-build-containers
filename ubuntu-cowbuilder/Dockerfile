@@ -20,8 +20,8 @@ RUN \
 COPY pbuilderrc /root/.pbuilderrc
 
 RUN for dist in noble mantic lunar jammy focal; do \
-       echo Platform: b=${BUILDPLATFORM} a=${ARCH} t=${TARGETARCH}; \
-       DIST=$dist cowbuilder --create --distribution $dist --basepath /var/cache/pbuilder/base-$dist.cow; \
+       echo Architecture: ${TARGETARCH}; \
+       ARCH=${TARGETARCH} DIST=$dist cowbuilder --create --distribution $dist --basepath /var/cache/pbuilder/base-$dist.cow; \
     done
 
 CMD ["/bin/bash"]
