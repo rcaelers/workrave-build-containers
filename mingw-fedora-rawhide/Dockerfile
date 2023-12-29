@@ -54,9 +54,9 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
 RUN mkdir -p /workspace
 
 RUN cd /workspace && \
-    curl -O http://files.jrsoftware.org/is/6/innosetup-6.2.1.exe && \
-    innoextract -d /workspace/inno ./innosetup-6.2.1.exe && \
-    rm ./innosetup-6.2.1.exe
+    curl -O http://files.jrsoftware.org/is/6/innosetup-6.2.2.exe && \
+    innoextract -d /workspace/inno ./innosetup-6.2.2.exe && \
+    rm ./innosetup-6.2.2.exe
 
 RUN cd /workspace && \
     curl -OL https://github.com/mozilla/dump_syms/releases/download/v1.0.1/dump_syms-linux-x86_64.tar.gz && \
