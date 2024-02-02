@@ -21,8 +21,6 @@ jobs:
           #  platforms: linux/amd64,linux/arm64
           - image: ubuntu-cowbuilder
             platforms: linux/amd64,linux/arm64
-          #- image: ubuntu-cowbuilder-arm
-          #  platforms: linux/arm64
           - image: ubuntu-focal
             platforms: linux/amd64,linux/arm64
           - image: ubuntu-jammy
