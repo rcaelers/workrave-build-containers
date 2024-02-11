@@ -19,6 +19,7 @@ RUN \
     autopoint \
     build-essential \
     cmake \
+    curl \
     debhelper \
     devscripts \
     dh-autoreconf \
