@@ -29,6 +29,7 @@ RUN \
     gsettings-desktop-schemas-dev \
     intltool \
     jq \
+    libayatana-appindicator3-dev \
     libayatana-indicator3-dev \
     libboost-chrono-dev \
     libboost-context-dev \
