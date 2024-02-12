@@ -25,6 +25,7 @@ RUN \
     dh-autoreconf \
     fuse \
     gettext \
+    gh \
     git \
     gobject-introspection \
     gsettings-desktop-schemas-dev \
