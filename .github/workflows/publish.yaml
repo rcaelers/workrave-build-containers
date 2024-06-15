@@ -29,6 +29,9 @@ jobs:
             platforms: linux/amd64,linux/arm64
           - image: ubuntu-noble
             platforms: linux/amd64,linux/arm64
+          - image: ubuntu-oracular
+            platforms: linux/amd64,linux/arm64
+            
 
     steps:
       - name: Checkout
