@@ -73,6 +73,7 @@ RUN \
     python3-paramiko \
     python3-pip \
     python3-setuptools \
+    python3-venv \
     qtbase5-dev \
     qtbase5-dev-tools \
     qtbase5-private-dev \

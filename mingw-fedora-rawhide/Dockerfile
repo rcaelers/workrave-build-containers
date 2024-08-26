@@ -43,6 +43,7 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
                 ninja-build \
                 python3-jinja2 \
                 python3-pip \
+                python3-venv \
                 rust \
                 tar \
                 which \
