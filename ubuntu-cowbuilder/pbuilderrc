@@ -27,7 +27,7 @@ DEBIAN_SUITES=($UNSTABLE_CODENAME $TESTING_CODENAME $STABLE_CODENAME $STABLE_BAC
     "experimental" "unstable" "testing" "stable")
 
 # List of Ubuntu suites. Update these when needed.
-UBUNTU_SUITES=("oracular" "noble" "mantic" "jammy" "focal")
+UBUNTU_SUITES=("oracular" "noble" "mantic" "jammy" )
 
 # Mirrors to use. Update these to your preferred mirror.
 DEBIAN_MIRROR="deb.debian.org"
@@ -208,8 +208,13 @@ elif $(echo ${UBUNTU_SUITES[@]} | grep -q $DIST); then
 	OTHERMIRROR="deb $MIRRORSITE $DIST-security main restricted universe multiverse"
 	OTHERMIRROR="$OTHERMIRROR | deb $MIRRORSITE $DIST-updates main restricted universe multiverse"
     if [[ "$DIST" == "focal" ]]; then
-          wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
+          wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - > /usr/share/keyrings/kitware-archive-keyring.gpg 
+          ls -la /usr/share/keyrings/kitware-archive-keyring.gpg
+          gpg --no-default-keyring --keyring /usr/share/keyrings/kitware-archive-keyring.gpg --fingerprint
+          APTKEYRINGS=("${APTKEYRINGS[@]}" "/usr/share/keyrings/kitware-archive-keyring.gpg")
           OTHERMIRROR="$OTHERMIRROR | deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main"
+          DEBOOTSTRAPOPTS+=("--include=ca-certificates")
+          EXTRAPACKAGES="ca-certificates"    
     fi
 else
     echo "Unknown distribution: $DIST"
