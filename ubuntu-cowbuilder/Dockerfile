@@ -13,7 +13,7 @@ RUN mkdir /workrave && \
 RUN \
   export DEBIAN_FRONTEND=noninteractive && \
   apt-get update -y && \
-  apt-get install -y debian-archive-keyring binfmt-support cowbuilder pbuilder qemu-user-static devscripts debootstrap && \
+  apt-get install -y debian-archive-keyring binfmt-support cowbuilder pbuilder qemu-user-static devscripts debootstrap ca-certificates gpg wget && \
   apt-get install -y --reinstall qemu-user-static && \
   apt-get clean
 

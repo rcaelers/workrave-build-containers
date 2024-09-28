@@ -207,6 +207,10 @@ elif $(echo ${UBUNTU_SUITES[@]} | grep -q $DIST); then
     fi
 	OTHERMIRROR="deb $MIRRORSITE $DIST-security main restricted universe multiverse"
 	OTHERMIRROR="$OTHERMIRROR | deb $MIRRORSITE $DIST-updates main restricted universe multiverse"
+    if [[ "$DIST" == "focal" ]]; then
+          wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
+          OTHERMIRROR="$OTHERMIRROR | deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main"
+    fi
 else
     echo "Unknown distribution: $DIST"
     exit 1
