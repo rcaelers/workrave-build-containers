@@ -222,3 +222,4 @@ else
 fi
 
 echo "DIST is $DIST"
+echo "BASEPATH is $BASEPATH"
