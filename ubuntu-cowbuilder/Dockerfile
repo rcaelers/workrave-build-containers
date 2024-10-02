@@ -21,7 +21,7 @@ COPY pbuilderrc /root/.pbuilderrc
 
 RUN for dist in oracular noble jammy; do \
        echo Architecture: ${TARGETARCH}; \
-       ARCH=${TARGETARCH} DIST=$dist cowbuilder --create --distribution $dist ; \
+       ARCH=${TARGETARCH} DIST=$dist cowbuilder --create --distribution $dist --basepath /var/cache/pbuilder/base-$dist.cow; \
     done
 
 CMD ["/bin/bash"]
