@@ -62,6 +62,7 @@ RUN \
     libssl-dev \
     libtool \
     libxfce4panel-2.0-dev \
+    libxfce4ui-2-dev \
     libxi-dev \
     libxmu-dev \
     libxss-dev \
