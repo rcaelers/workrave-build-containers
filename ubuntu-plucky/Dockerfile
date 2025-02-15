@@ -23,6 +23,7 @@ RUN \
     debhelper \
     devscripts \
     dh-autoreconf \
+    extra-cmake-modules \
     fuse \
     gettext \
     gh \
@@ -55,8 +56,6 @@ RUN \
     libindicator3-dev \
     libmate-panel-applet-dev \
     libpulse-dev \
-    libqt5svg5-dev \
-    libqt5x11extras5-dev \
     librsvg2-dev \
     libspdlog-dev \
     libssl-dev \
@@ -76,11 +75,12 @@ RUN \
     python3-pip \
     python3-setuptools \
     python3-venv \
-    qtbase5-dev \
-    qtbase5-dev-tools \
-    qtbase5-private-dev \
-    qttools5-dev \
-    qttools5-dev-tools \
+    qt6-base-dev \
+    qt6-base-dev-tools \
+    qt6-svg-dev \
+    qt6-wayland-dev-tools \
+    qt6-tools-dev \
+    qt6-wayland-private-dev \
     xz-utils && \
   apt-get clean
 
