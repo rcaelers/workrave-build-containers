@@ -8,7 +8,7 @@ ARG BUILDPLATFORM
 
 ENV WORKRAVE_CONTAINER_COMMIT=${GIT_COMMIT_HASH}
 RUN mkdir /workrave && \
-    echo ${GIT_COMMIT_HASH} > /workrave/container-commit
+  echo ${GIT_COMMIT_HASH} > /workrave/container-commit
 
 RUN \
   export DEBIAN_FRONTEND=noninteractive && \
@@ -19,9 +19,9 @@ RUN \
 
 COPY pbuilderrc /root/.pbuilderrc
 
-RUN for dist in plucky oracular noble jammy; do \
-       echo Architecture: ${TARGETARCH}; \
-       ARCH=${TARGETARCH} DIST=$dist cowbuilder --create --distribution $dist --basepath /var/cache/pbuilder/base-$dist.cow; \
-    done
+RUN for dist in questing plucky noble jammy; do \
+  echo Architecture: ${TARGETARCH}; \
+  ARCH=${TARGETARCH} DIST=$dist cowbuilder --create --distribution $dist --basepath /var/cache/pbuilder/base-$dist.cow; \
+  done
 
 CMD ["/bin/bash"]
