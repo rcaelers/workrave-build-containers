@@ -1,6 +1,6 @@
 FROM ubuntu:questing
 
-LABEL maintainer "Rob Caelers <rob.caelers@gmail.com>"
+LABEL maintainer="Rob Caelers <rob.caelers@gmail.com>"
 
 ARG GIT_COMMIT_HASH
 ENV WORKRAVE_CONTAINER_COMMIT=${GIT_COMMIT_HASH}
@@ -11,6 +11,10 @@ RUN \
   export DEBIAN_FRONTEND=noninteractive && \
   apt-get update -y && \
   apt-get dist-upgrade -y && \
+  apt-get install -y \
+    python3 \
+    build-essential \
+    git && \
   apt-get install -y \
     appstream \
     autoconf \
