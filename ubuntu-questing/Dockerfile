@@ -13,8 +13,16 @@ RUN \
   apt-get dist-upgrade -y && \
   apt-get install -y \
     python3 \
+    python3-jinja2 \
+    python3-paramiko \
+    python3-pip \
+    python3-setuptools \
+    python3-venv \
     build-essential \
     git && \
+  apt-get install -y \
+    nodejs \
+    npm && \
   apt-get install -y \
     appstream \
     autoconf \
@@ -71,14 +79,7 @@ RUN \
     libxss-dev \
     libxtst-dev \
     ninja-build \
-    nodejs \
-    npm \
     patchelf \
-    python3-jinja2 \
-    python3-paramiko \
-    python3-pip \
-    python3-setuptools \
-    python3-venv \
     qt6-base-dev \
     qt6-base-dev-tools \
     qt6-base-private-dev \
