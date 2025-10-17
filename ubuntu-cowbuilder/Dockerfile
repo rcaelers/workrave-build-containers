@@ -1,4 +1,4 @@
-FROM ubuntu:noble
+FROM ubuntu:questing
 
 LABEL maintainer "Rob Caelers <rob.caelers@gmail.com>"
 
