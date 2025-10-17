@@ -17,10 +17,10 @@ USECOLORS=auto
 # Codenames for Debian suites according to their alias. Update these when
 # needed.
 UNSTABLE_CODENAME="sid"
-TESTING_CODENAME="trixie"
-STABLE_CODENAME="bookworm"
+TESTING_CODENAME="forky"
+STABLE_CODENAME="trixie"
 STABLE_BACKPORTS_SUITE="$STABLE_CODENAME-backports"
-OLDSTABLE_CODENAME="bullseye"
+OLDSTABLE_CODENAME="bookworm"
 
 # List of Debian suites.
 DEBIAN_SUITES=($UNSTABLE_CODENAME $TESTING_CODENAME $STABLE_CODENAME $STABLE_BACKPORTS_SUITE $OLDSTABLE_CODENAME
@@ -57,24 +57,24 @@ BUILD_HOME=/nonexistent
 #MIRRORSITE=http://archive.ubuntu.com/ubuntu
 #OTHERMIRROR="deb http://www.home.com/updates/ ./"
 #export http_proxy=http://your-proxy:8080/
-USESHM=no
-USEPROC=no
+USESHM=yes
+USEPROC=yes
 USEDEVFS=no
-USEDEVPTS=no
-USESYSFS=no
+USEDEVPTS=yes
+USESYSFS=yes
 USENETWORK=no
 USECGROUP=yes
 BUILDRESULT=/var/cache/pbuilder/result/
 
 # specifying the distribution forces the distribution on "pbuilder update"
-# DISTRIBUTION=devel
+#DISTRIBUTION=sid
 # specifying the architecture passes --arch= to debootstrap; the default is
 # to use the architecture of the host
 #ARCHITECTURE=$(ARCH)
 # specifying the components of the distribution, for instance to enable all
 # components on Debian use "main contrib non-free" and on Ubuntu "main
 # restricted universe multiverse"
-#COMPONENTS="main universe"
+COMPONENTS="main"
 #specify the cache for APT
 APTCACHE="/var/cache/pbuilder/aptcache/"
 APTCACHEHARDLINK="no"
@@ -97,7 +97,7 @@ PDEBUILD_PBUILDER="cowbuilder"
 
 # Whether to generate an additional .changes file for a source-only upload,
 # whilst still producing a full .changes file for any binary packages built.
-SOURCE_ONLY_CHANGES=no
+SOURCE_ONLY_CHANGES=yes
 
 # additional build results to copy out of the package build area
 #ADDITIONAL_BUILDRESULTS=(xunit.xml .coverage)
