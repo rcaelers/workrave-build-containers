@@ -58,12 +58,12 @@ BUILD_HOME=/nonexistent
 #OTHERMIRROR="deb http://www.home.com/updates/ ./"
 #export http_proxy=http://your-proxy:8080/
 USESHM=no
-USEPROC=yes
+USEPROC=no
 USEDEVFS=no
-USEDEVPTS=yes
-USESYSFS=yes
+USEDEVPTS=no
+USESYSFS=no
 USENETWORK=no
-USECGROUP=yes
+USECGROUP=no
 BUILDRESULT=/var/cache/pbuilder/result/
 
 # specifying the distribution forces the distribution on "pbuilder update"

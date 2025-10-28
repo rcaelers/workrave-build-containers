@@ -17,11 +17,14 @@ RUN \
   apt-get install -y --reinstall qemu-user-static && \
   apt-get clean
 
-COPY pbuilderrc /root/.pbuilderrc
+COPY pbuilderrc-build /root/.pbuilderrc
 
 RUN for dist in questing plucky noble jammy; do \
   echo Architecture: ${TARGETARCH}; \
   ARCH=${TARGETARCH} DIST=$dist pbuilder --create --distribution $dist --basetgz /var/cache/pbuilder/base-$dist.tgz; \
   done
+
+# Replace with the runtime pbuilderrc that has mounts enabled
+COPY pbuilderrc /root/.pbuilderrc
 
 CMD ["/bin/bash"]
