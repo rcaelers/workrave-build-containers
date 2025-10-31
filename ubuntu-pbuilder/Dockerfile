@@ -19,7 +19,7 @@ RUN \
 
 COPY pbuilderrc-build /root/.pbuilderrc
 
-RUN for dist in questing plucky noble jammy; do \
+RUN for dist in rolling questing plucky noble jammy; do \
   echo Architecture: ${TARGETARCH}; \
   ARCH=${TARGETARCH} DIST=$dist pbuilder --create --distribution $dist --basetgz /var/cache/pbuilder/base-$dist.tgz; \
   done

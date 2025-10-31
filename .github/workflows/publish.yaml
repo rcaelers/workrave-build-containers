@@ -25,7 +25,8 @@ jobs:
             platforms: linux/amd64,linux/arm64
           - image: ubuntu-questing
             platforms: linux/amd64,linux/arm64
-
+          - image: ubuntu-rolling
+            platforms: linux/amd64,linux/arm64
     steps:
       - name: Checkout
         uses: actions/checkout@v4
