@@ -1,4 +1,4 @@
-FROM ubuntu:questing
+FROM ubuntu:rolling
 
 LABEL maintainer "Rob Caelers <rob.caelers@gmail.com>"
 
