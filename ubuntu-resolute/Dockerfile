@@ -18,6 +18,7 @@ RUN \
     python3-pip \
     python3-setuptools \
     python3-venv \
+    python3-inflect \
     build-essential \
     git && \
   apt-get install -y \
