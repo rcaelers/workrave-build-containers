@@ -47,34 +47,16 @@ jobs:
       - name: qemu workaround
         run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes -c yes
 
-      - name: Build and push ${{ matrix.image }}
-        run: |
-          cd ./${{ matrix.image }}/
-
-          # Build for each platform separately since we need privileged mode
-          IFS=',' read -ra PLATFORMS <<< "${{ matrix.platforms }}"
-          for platform in "${PLATFORMS[@]}"; do
-            arch=$(echo $platform | cut -d'/' -f2)
-            echo "Building for $platform (arch: $arch)"
-            
-            docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-            
-            docker buildx build \
-              --platform $platform \
-              --build-arg GIT_COMMIT_HASH=${{ github.sha }} \
-              --build-arg TARGETARCH=$arch \
-              --tag ghcr.io/${{ github.repository_owner }}/workrave-build:${{ matrix.image }}-$arch \
-              --load \
-              .
-            
-            docker push ghcr.io/${{ github.repository_owner }}/workrave-build:${{ matrix.image }}-$arch
-          done
-
-          # Create and push manifest
-          docker manifest create ghcr.io/${{ github.repository_owner }}/workrave-build:${{ matrix.image }} \
-            $(IFS=','; for p in ${PLATFORMS[*]}; do echo ghcr.io/${{ github.repository_owner }}/workrave-build:${{ matrix.image }}-$(echo $p | cut -d'/' -f2); done)
-
-          docker manifest push ghcr.io/${{ github.repository_owner }}/workrave-build:${{ matrix.image }}
+      - name: Build ${{ matrix.image }}
+        uses: docker/build-push-action@v6
+        with:
+          context: ./${{ matrix.image }}/
+          platforms: ${{ matrix.platforms }}
+          file: ./${{ matrix.image }}/Dockerfile
+          build-args: |
+            GIT_COMMIT_HASH=${{ github.sha }}
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/workrave-build:${{ matrix.image }}
 
       - name: Image digest
         run: echo "Build complete"
