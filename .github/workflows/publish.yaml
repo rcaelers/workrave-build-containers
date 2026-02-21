@@ -21,8 +21,6 @@ jobs:
             platforms: linux/amd64,linux/arm64
           - image: ubuntu-noble
             platforms: linux/amd64,linux/arm64
-          - image: ubuntu-plucky
-            platforms: linux/amd64,linux/arm64
           - image: ubuntu-questing
             platforms: linux/amd64,linux/arm64
           - image: ubuntu-resolute
