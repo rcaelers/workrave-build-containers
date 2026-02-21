@@ -11,6 +11,7 @@ RUN mkdir /workrave && \
   echo ${GIT_COMMIT_HASH} > /workrave/container-commit
 
 RUN \
+  export _PYTHON_SUBPROCESS_USE_POSIX_SPAWN=0 && \
   export DEBIAN_FRONTEND=noninteractive && \
   apt-get update -y && \
   apt-get dist-upgrade -y && \
@@ -22,7 +23,7 @@ COPY pbuilderrc-build /root/.pbuilderrc
 
 RUN for dist in resolute questing noble jammy; do \
   echo Architecture: ${TARGETARCH}; \
-  ARCH=${TARGETARCH} DIST=$dist pbuilder --create --distribution $dist --basetgz /var/cache/pbuilder/base-$dist.tgz; \
+  _PYTHON_SUBPROCESS_USE_POSIX_SPAWN=0 ARCH=${TARGETARCH} DIST=$dist pbuilder --create --distribution $dist --basetgz /var/cache/pbuilder/base-$dist.tgz; \
   done
 
 # Replace with the runtime pbuilderrc that has mounts enabled

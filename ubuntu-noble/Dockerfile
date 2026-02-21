@@ -8,6 +8,7 @@ RUN mkdir /workrave && \
     echo ${GIT_COMMIT_HASH} > /workrave/container-commit
 
 RUN \
+  export _PYTHON_SUBPROCESS_USE_POSIX_SPAWN=0 && \
   export DEBIAN_FRONTEND=noninteractive && \
   apt-get update -y && \
   apt-get dist-upgrade -y && \
