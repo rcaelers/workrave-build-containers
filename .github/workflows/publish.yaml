@@ -5,59 +5,26 @@ on:
     branches: [master]
   workflow_dispatch:
 
+env:
+  REGISTRY_IMAGE: ghcr.io/${{ github.repository_owner }}/workrave-build
+
 jobs:
-  build_on_linux:
-    runs-on: ubuntu-24.04
-    name: Image ${{ matrix.image }}
+  build_linux:
+    name: Linux ${{ matrix.image }}
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - image: debian-testing
-            platforms: linux/amd64,linux/arm64
-          - image: ubuntu-pbuilder
-            platforms: linux/amd64,linux/arm64
-          - image: ubuntu-jammy
-            platforms: linux/amd64,linux/arm64
-          - image: ubuntu-noble
-            platforms: linux/amd64,linux/arm64
-          - image: ubuntu-questing
-            platforms: linux/amd64,linux/arm64
-          - image: ubuntu-resolute
-            platforms: linux/amd64,linux/arm64
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: qemu workaround
-        run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes -c yes
-
-      - name: Build ${{ matrix.image }}
-        uses: docker/build-push-action@v6
-        with:
-          context: ./${{ matrix.image }}/
-          platforms: ${{ matrix.platforms }}
-          file: ./${{ matrix.image }}/Dockerfile
-          build-args: |
-            GIT_COMMIT_HASH=${{ github.sha }}
-          push: true
-          tags: ghcr.io/${{ github.repository_owner }}/workrave-build:${{ matrix.image }}
-
-      - name: Image digest
-        run: echo "Build complete"
+        image:
+          - debian-testing
+          - ubuntu-pbuilder
+          - ubuntu-jammy
+          - ubuntu-noble
+          - ubuntu-questing
+          - ubuntu-resolute
+    uses: ./.github/workflows/build-linux-image.yml
+    with:
+      image: ${{ matrix.image }}
+    secrets: inherit
 
   build_on_windows:
     runs-on: windows-2022
