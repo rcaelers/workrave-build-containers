@@ -54,7 +54,7 @@ COPY --from=builder C:/msys64 C:/msys64
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 RUN [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; \
-    Invoke-WebRequest -UseBasicParsing -Uri https://files.jrsoftware.org/is/6/innosetup-6.2.2.exe -OutFile c:\innosetup.exe; \
+    Invoke-WebRequest -UseBasicParsing -Uri https://github.com/jrsoftware/issrc/releases/download/is-6_7_1/innosetup-6.7.1.exe -OutFile c:\innosetup.exe; \
     Start-Process ./innosetup.exe -ArgumentList '/VERYSILENT /NORESTART /NOICONS /ALLUSERS /SUPPRESSMSGBOXES /NOCANCEL /SP-' -Wait ; \
     Remove-Item -Path c:\innosetup.exe -Force;
 

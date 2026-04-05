@@ -88,7 +88,6 @@ RUN \
     qt6-svg-dev \
     qt6-tools-dev \
     qt6-wayland-dev \
-    qt6-wayland-dev-tools \
     qt6-wayland-private-dev \
     xz-utils && \
   apt-get clean

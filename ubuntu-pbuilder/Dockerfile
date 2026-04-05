@@ -15,8 +15,8 @@ RUN \
   export DEBIAN_FRONTEND=noninteractive && \
   apt-get update -y && \
   apt-get dist-upgrade -y && \
-  apt-get install -y debian-archive-keyring binfmt-support pbuilder qemu-user-static devscripts debootstrap && \
-  apt-get install -y --reinstall qemu-user-static && \
+  apt-get install -y debian-archive-keyring binfmt-support pbuilder qemu-user-binfmt devscripts debootstrap && \
+  apt-get install -y --reinstall qemu-user-binfmt && \
   apt-get clean
 
 COPY pbuilderrc-build /root/.pbuilderrc

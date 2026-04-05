@@ -74,7 +74,6 @@ RUN \
     qt6-base-dev \
     qt6-base-dev-tools \
     qt6-svg-dev \
-    qt6-wayland-dev-tools \
     qt6-tools-dev \
     qt6-wayland-private-dev \
     xz-utils && \

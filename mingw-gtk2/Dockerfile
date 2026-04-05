@@ -58,8 +58,8 @@ RUN mkdir -p /workspace/innoextract && \
 
 RUN mkdir -p /workspace/inno && \
     cd /workspace && \
-    curl -O http://files.jrsoftware.org/is/6/innosetup-6.1.2.exe && \
-    /usr/local/bin/innoextract -d /workspace/inno ./innosetup-6.1.2.exe && rm ./innosetup-6.1.2.exe
+    curl -O https://github.com/jrsoftware/issrc/releases/download/is-6_7_1/innosetup-6.7.1.exe && \
+    /usr/local/bin/innoextract -d /workspace/inno ./innosetup-6.7.1.exe && rm ./innosetup-6.7.1.exe
 
 RUN cd /workspace && \
     curl -O https://snapshots.workrave.org/prebuilt/workrave-prebuilt-windows-vs2015.tar.xz && \
