@@ -1,6 +1,6 @@
 FROM ubuntu:questing
 
-LABEL maintainer "Rob Caelers <rob.caelers@gmail.com>"
+LABEL maintainer="Rob Caelers <rob.caelers@gmail.com>"
 
 ARG GIT_COMMIT_HASH
 ARG TARGETARCH

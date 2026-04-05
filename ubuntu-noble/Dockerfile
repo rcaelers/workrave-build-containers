@@ -1,6 +1,6 @@
 FROM ubuntu:noble
 
-LABEL maintainer "Rob Caelers <rob.caelers@gmail.com>"
+LABEL maintainer="Rob Caelers <rob.caelers@gmail.com>"
 
 ARG GIT_COMMIT_HASH
 ENV WORKRAVE_CONTAINER_COMMIT=${GIT_COMMIT_HASH}
