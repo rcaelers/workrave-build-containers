@@ -1,4 +1,4 @@
-FROM ubuntu:resolute
+FROM ubuntu:stonking
 
 LABEL maintainer="Rob Caelers <rob.caelers@gmail.com>"
 
