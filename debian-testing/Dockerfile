@@ -40,7 +40,6 @@ RUN \
     libboost-log-dev \
     libboost-program-options-dev \
     libboost-regex-dev \
-    libboost-system-dev \
     libboost-test-dev \
     libboost-thread-dev \
     libdbusmenu-glib-dev \
