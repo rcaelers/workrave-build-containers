@@ -1,4 +1,4 @@
-FROM ubuntu:questing
+FROM ubuntu:resolute
 
 LABEL maintainer="Rob Caelers <rob.caelers@gmail.com>"
 
@@ -19,7 +19,7 @@ RUN \
 
 COPY pbuilderrc /root/.pbuilderrc
 
-RUN for dist in resolute questing noble jammy; do \
+RUN for dist in stonking resolute noble jammy; do \
   echo Architecture: ${TARGETARCH}; \
   ARCH=${TARGETARCH} DIST=$dist cowbuilder --create --distribution $dist --basepath /var/cache/pbuilder/base-$dist.cow; \
   done

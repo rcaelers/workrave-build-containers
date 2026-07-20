@@ -19,8 +19,8 @@ jobs:
           - ubuntu-pbuilder
           - ubuntu-jammy
           - ubuntu-noble
-          - ubuntu-questing
           - ubuntu-resolute
+          - ubuntu-stonking
     uses: ./.github/workflows/build-linux-image.yml
     with:
       image: ${{ matrix.image }}
