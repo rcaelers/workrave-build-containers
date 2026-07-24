@@ -46,15 +46,21 @@ RUN \
     libboost-system-dev \
     libboost-test-dev \
     libboost-thread-dev \
+    libclang-dev \
     libdbusmenu-glib-dev \
     libdbusmenu-gtk3-dev \
     libgirepository1.0-dev \
+    libgmock-dev \
     libgnome-panel-dev \
+    libgrpc++-dev \
+    libgrpc-dev \
     libgstreamer1.0-dev \
+    libgtest-dev \
     libgtk-3-dev \
     libgtkmm-3.0-dev \
     libindicator3-dev \
     libmate-panel-applet-dev \
+    libprotobuf-dev \
     libpulse-dev \
     libqt5svg5-dev \
     libqt5x11extras5-dev \
@@ -71,6 +77,8 @@ RUN \
     nodejs \
     npm \
     patchelf \
+    protobuf-compiler \
+    protobuf-compiler-grpc \
     python3-jinja2 \
     python3-paramiko \
     python3-pip \
@@ -83,5 +91,12 @@ RUN \
     qttools5-dev-tools \
     xz-utils && \
   apt-get clean
+
+# Rust toolchain for clang-rpc-gen (libs/rpc/tool) — installed via rustup
+# rather than the distro's apt package so all container variants (jammy
+# through stonking) get the same, sufficiently recent rustc/cargo instead of
+# whatever each Ubuntu release happened to package.
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal --default-toolchain stable
+ENV PATH="/root/.cargo/bin:${PATH}"
 
 CMD ["/bin/bash"]

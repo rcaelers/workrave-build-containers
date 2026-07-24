@@ -14,6 +14,7 @@ RUN echo "%_install_langs all" >/etc/rpm/macros.image-language-conf && \
                 bzip2 \
                 cargo \
                 clang \
+                clang-libs \
                 cmake \
                 dos2unix \
                 gcc \
