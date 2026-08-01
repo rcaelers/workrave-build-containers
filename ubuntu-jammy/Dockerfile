@@ -31,6 +31,7 @@ RUN \
     gsettings-desktop-schemas-dev \
     intltool \
     jq \
+    libayatana-appindicator-glib-dev \
     libayatana-appindicator3-dev \
     libayatana-indicator3-dev \
     libboost-chrono-dev \
@@ -66,6 +67,7 @@ RUN \
     librsvg2-dev \
     libspdlog-dev \
     libssl-dev \
+    libsqlite3-dev \
     libtool \
     libxfce4panel-2.0-dev \
     libxi-dev \
