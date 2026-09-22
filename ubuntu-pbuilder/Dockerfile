@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1-labs
+
 FROM ubuntu:stonking
 
 LABEL maintainer="Rob Caelers <rob.caelers@gmail.com>"
@@ -21,12 +23,19 @@ RUN \
 
 COPY pbuilderrc-build /root/.pbuilderrc
 
-RUN for dist in stonking resolute noble jammy; do \
-  echo Architecture: ${TARGETARCH}; \
-  _PYTHON_SUBPROCESS_USE_POSIX_SPAWN=0 ARCH=${TARGETARCH} DIST=$dist pbuilder --create --distribution $dist --basetgz /var/cache/pbuilder/base-$dist.tgz; \
+# debootstrap must mount /proc inside the chroot for package configuration.
+# Grant mount permissions only to the archive-creation step.
+RUN --security=insecure set -eu; \
+  for dist in stonking resolute noble jammy; do \
+    echo "Creating ${dist} base archive for ${TARGETARCH}"; \
+    archive="/var/cache/pbuilder/base-${dist}.tgz"; \
+    _PYTHON_SUBPROCESS_USE_POSIX_SPAWN=0 ARCH="${TARGETARCH}" DIST="$dist" \
+      pbuilder --create --distribution "$dist" --basetgz "$archive"; \
+    test -s "$archive"; \
+    tar -tzf "$archive" > /dev/null; \
   done
 
-# Replace with the runtime pbuilderrc that has mounts enabled
+# Replace with the runtime pbuilderrc that enables the remaining mounts
 COPY pbuilderrc /root/.pbuilderrc
 
 CMD ["/bin/bash"]

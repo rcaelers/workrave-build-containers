@@ -12,7 +12,7 @@ env:
 
 jobs:
   build:
-    runs-on: ${{ matrix.platform == 'linux/arm64' && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
+    runs-on: ${{ matrix.platform == 'linux/arm64' && 'ubuntu-26.04-arm' || 'ubuntu-26.04' }}
     name: Build ${{ inputs.image }} (${{ matrix.platform }})
     strategy:
       fail-fast: false
@@ -26,6 +26,9 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
+        with:
+          # Only pbuilder needs to mount filesystems while creating its chroots.
+          buildkitd-flags: ${{ inputs.image == 'ubuntu-pbuilder' && '--allow-insecure-entitlement security.insecure' || '' }}
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v4
@@ -46,6 +49,7 @@ jobs:
           context: ./${{ inputs.image }}/
           platforms: ${{ matrix.platform }}
           file: ./${{ inputs.image }}/Dockerfile
+          allow: ${{ inputs.image == 'ubuntu-pbuilder' && 'security.insecure' || '' }}
           build-args: |
             GIT_COMMIT_HASH=${{ github.sha }}
           outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=true
@@ -65,7 +69,7 @@ jobs:
           retention-days: 1
 
   merge:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     name: Merge ${{ inputs.image }}
     needs: build
     steps:

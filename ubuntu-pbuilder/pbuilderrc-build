@@ -58,9 +58,10 @@ BUILD_HOME=/nonexistent
 #OTHERMIRROR="deb http://www.home.com/updates/ ./"
 #export http_proxy=http://your-proxy:8080/
 USESHM=no
-USEPROC=no
+# Package configuration needs /proc; apt uses /dev/pts for its log.
+USEPROC=yes
 USEDEVFS=no
-USEDEVPTS=no
+USEDEVPTS=yes
 USESYSFS=no
 USENETWORK=no
 USECGROUP=no
