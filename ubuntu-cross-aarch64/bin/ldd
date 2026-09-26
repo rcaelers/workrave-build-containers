@@ -1,0 +1,10 @@
+#!/bin/sh
+# linuxdeploy and g-ir-scanner need target dependency paths. Use the ARM64
+# loader only for ARM64 ELF files; native tools still use the system ldd.
+set -eu
+if [ "$#" -eq 1 ] && [ -f "$1" ] && \
+    LC_ALL=C readelf -h "$1" 2>/dev/null | grep -q 'Machine:.*AArch64'; then
+    exec /opt/workrave/bin/run-aarch64 \
+        /usr/lib/aarch64-linux-gnu/ld-linux-aarch64.so.1 --list "$1"
+fi
+exec /usr/bin/ldd "$@"

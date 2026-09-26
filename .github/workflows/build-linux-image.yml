@@ -6,6 +6,9 @@ on:
       image:
         required: true
         type: string
+      platforms:
+        type: string
+        default: '["linux/amd64", "linux/arm64"]'
 
 env:
   REGISTRY_IMAGE: ghcr.io/${{ github.repository_owner }}/workrave-build
@@ -17,12 +20,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform:
-          - linux/amd64
-          - linux/arm64
+        platform: ${{ fromJSON(inputs.platforms) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+
+      # ARM64 package post-install scripts can run during image creation.
+      # Workrave compilation uses native tools once the image is built.
+      - name: Set up ARM64 package helpers
+        if: inputs.image == 'ubuntu-cross-aarch64'
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4

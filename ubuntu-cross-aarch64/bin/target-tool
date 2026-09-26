@@ -1,0 +1,12 @@
+#!/bin/sh
+# GTK's cache generators dlopen target modules. Everything else, including
+# linuxdeploy, patchelf and SquashFS compression, runs natively.
+set -eu
+case "$(basename "$0")" in
+    gtk-query-immodules-3.0)
+        tool=/usr/lib/aarch64-linux-gnu/libgtk-3-0/gtk-query-immodules-3.0 ;;
+    gdk-pixbuf-query-loaders)
+        tool=/usr/lib/aarch64-linux-gnu/gdk-pixbuf-2.0/gdk-pixbuf-query-loaders ;;
+    *) echo "Unknown target helper: $0" >&2; exit 1 ;;
+esac
+exec /opt/workrave/bin/run-aarch64 "$tool" "$@"
