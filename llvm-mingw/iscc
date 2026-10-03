@@ -1,0 +1,12 @@
+#!/bin/bash
+set -euo pipefail
+
+arguments=()
+for argument in "$@"; do
+  case "$argument" in
+    /o/*) arguments+=("/o$(wine winepath.exe -w "${argument:2}")") ;;
+    /*.iss) arguments+=("$(wine winepath.exe -w "$argument")") ;;
+    *) arguments+=("$argument") ;;
+  esac
+done
+exec xvfb-run -a wine /opt/inno/ISCC.exe "${arguments[@]}"

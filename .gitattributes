@@ -1,0 +1,4 @@
+# Keep Windows image-context bytes identical to the release runner's checkout.
+windows-msys2/** text eol=lf
+windows-conan/** text eol=lf
+llvm-mingw/** text eol=lf

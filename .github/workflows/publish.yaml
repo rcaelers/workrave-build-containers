@@ -3,18 +3,28 @@ name: Workrave build containers
 on:
   push:
     branches: [master]
+    paths:
+      - 'debian-testing/**'
+      - 'ubuntu-pbuilder/**'
+      - 'ubuntu-cross-aarch64/**'
+      - 'ubuntu-jammy/**'
+      - 'ubuntu-noble/**'
+      - 'ubuntu-resolute/**'
+      - 'ubuntu-stonking/**'
+      - 'llvm-mingw/**'
+      - 'windows-msys2/**'
+      - 'windows-conan/**'
+      - '.github/workflows/**'
+      - '.github/scripts/**'
+      - '.gitattributes'
   workflow_dispatch:
-
-env:
-  REGISTRY_IMAGE: ghcr.io/${{ github.repository_owner }}/workrave-build
-
-jobs:
-  build_linux:
-    name: Linux ${{ matrix.image }}
-    strategy:
-      fail-fast: false
-      matrix:
-        image:
+    inputs:
+      image:
+        description: Image to rebuild
+        type: choice
+        default: all
+        options:
+          - all
           - debian-testing
           - ubuntu-pbuilder
           - ubuntu-cross-aarch64
@@ -22,37 +32,61 @@ jobs:
           - ubuntu-noble
           - ubuntu-resolute
           - ubuntu-stonking
-    uses: ./.github/workflows/build-linux-image.yml
-    with:
-      image: ${{ matrix.image }}
-      platforms: ${{ matrix.image == 'ubuntu-cross-aarch64' && '["linux/amd64"]' || '["linux/amd64", "linux/arm64"]' }}
-    secrets: inherit
+          - llvm-mingw
+          - windows-msys2
+          - windows-conan
 
-  build_on_windows:
-    runs-on: windows-2022
-    name: Windows Image ${{ matrix.image }}
+permissions:
+  contents: read
+
+jobs:
+  changes:
+    name: Select changed images
+    runs-on: ubuntu-26.04
+    outputs:
+      linux: ${{ steps.select.outputs.linux }}
+      windows: ${{ steps.select.outputs.windows }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Test image selection
+        run: python3 -m unittest discover -s .github/scripts -p 'test_*.py' -v
+      - name: Select images
+        id: select
+        env:
+          REQUESTED_IMAGE: ${{ inputs.image || 'all' }}
+        run: python3 .github/scripts/select-images.py
+
+  build_linux:
+    needs: changes
+    if: needs.changes.outputs.linux != '[]'
+    name: Linux ${{ matrix.image }}
+    permissions:
+      contents: read
+      packages: write
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - image: windows-msys2
+        image: ${{ fromJSON(needs.changes.outputs.linux) }}
+    uses: ./.github/workflows/build-linux-image.yml
+    with:
+      image: ${{ matrix.image }}
+      platforms: ${{ (matrix.image == 'ubuntu-cross-aarch64' || matrix.image == 'llvm-mingw') && '["linux/amd64"]' || '["linux/amd64", "linux/arm64"]' }}
+    secrets: inherit
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v4
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build
-        run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/workrave-build:${{ matrix.image }} --build-arg=GIT_COMMIT_HASH=${{ github.sha }} ./${{ matrix.image }}/
-
-      - name: Publish
-        if: ${{ github.event_name != 'pull_request' }}
-        run: |
-          docker push ghcr.io/${{ github.repository_owner }}/workrave-build:${{ matrix.image }}
+  build_windows:
+    needs: changes
+    if: needs.changes.outputs.windows != '[]'
+    name: Windows ${{ matrix.image }}
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        image: ${{ fromJSON(needs.changes.outputs.windows) }}
+    uses: ./.github/workflows/build-windows-image.yml
+    with:
+      image: ${{ matrix.image }}
+    secrets: inherit
