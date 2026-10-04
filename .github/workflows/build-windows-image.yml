@@ -37,11 +37,24 @@ jobs:
           $tag = "$($env:REGISTRY_IMAGE):$($env:IMAGE)"
           $contextHash = python .github/scripts/context-hash.py $env:IMAGE
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
-          # An absent published image is normal for the first build.
-          docker pull $tag
-          $global:LASTEXITCODE = 0
-          docker build --isolation=process --cache-from $tag --tag $tag --label "org.workrave.sdk-context=$contextHash" "./$($env:IMAGE)"
+          docker info --format 'Server={{.ServerVersion}} Driver={{.Driver}} Root={{.DockerRootDir}}'
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          Get-PSDrive -PSProvider FileSystem | Select-Object Name, Used, Free | Format-Table
+          # A published Windows image can retain an entire obsolete base and
+          # toolchain while Docker builds their replacements. Avoid that extra
+          # disk usage on the hosted runner, especially when committing MSVC.
+          docker build --isolation=process --tag $tag --label "org.workrave.sdk-context=$contextHash" "./$($env:IMAGE)"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+
+      - name: Diagnose failed Windows build
+        if: failure()
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Continue'
+          Get-PSDrive -PSProvider FileSystem | Select-Object Name, Used, Free | Format-Table
+          docker system df
+          Get-WinEvent -FilterHashtable @{LogName='Application'; ProviderName='docker'} -MaxEvents 30 -ErrorAction SilentlyContinue |
+            Format-List TimeCreated, LevelDisplayName, Message
 
       - name: Publish
         env:
