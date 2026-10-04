@@ -22,6 +22,41 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
+      - name: Configure Docker storage on the build drive
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          if ($env:RUNNER_ENVIRONMENT -ne 'github-hosted') {
+            throw 'Docker storage relocation is only intended for disposable GitHub-hosted runners'
+          }
+          # C: has too little space for the MSYS2/MSVC image and the temporary
+          # copy Docker writes when committing a layer. D: is the large build drive.
+          $volume = Get-Volume -DriveLetter D
+          if ($volume.FileSystem -ne 'NTFS' -or $volume.SizeRemaining -lt 64GB) {
+            throw 'The Windows container build requires an NTFS D: drive with at least 64 GiB free'
+          }
+          $dataRoot = 'D:\workrave-docker'
+          $configPath = Join-Path $env:ProgramData 'docker\config\daemon.json'
+          $config = if (Test-Path $configPath) {
+            Get-Content $configPath -Raw | ConvertFrom-Json
+          } else {
+            [pscustomobject]@{}
+          }
+          $config | Add-Member -NotePropertyName 'data-root' -NotePropertyValue $dataRoot -Force
+          Stop-Service docker
+          New-Item -ItemType Directory -Force -Path (Split-Path $configPath), $dataRoot | Out-Null
+          $config | ConvertTo-Json -Depth 20 | Set-Content $configPath -Encoding utf8
+          Start-Service docker
+          for ($attempt = 0; $attempt -lt 30; $attempt++) {
+            $actualRoot = docker info --format '{{.DockerRootDir}}' 2>$null
+            if ($LASTEXITCODE -eq 0) { break }
+            Start-Sleep -Seconds 1
+          }
+          if ($LASTEXITCODE -ne 0 -or $actualRoot.TrimEnd('\') -ne $dataRoot) {
+            throw "Docker did not start with the requested data root: $dataRoot"
+          }
+          Write-Host "Docker storage: $actualRoot ($([math]::Round($volume.SizeRemaining / 1GB, 1)) GiB free)"
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v4
         with:
