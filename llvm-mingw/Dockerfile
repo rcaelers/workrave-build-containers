@@ -8,9 +8,12 @@ COPY --from=rust /usr/local/rustup /opt/rust/rustup
 ENV CARGO_HOME=/cache/cargo
 ENV RUSTUP_HOME=/opt/rust/rustup
 
+# renovate: datasource=custom.llvm-mingw-linux depName=mstorsjo/llvm-mingw versioning=regex:^(?<major>\d{8})$
 ARG LLVM_MINGW_VERSION=20260922
 ARG LLVM_MINGW_SHA256=bb7bb7654b33d5aa8712acb837c963b2e0c56352560c76105270a3268c665c21
+# renovate: datasource=pypi depName=conan
 ARG CONAN_VERSION=2.32.0
+# renovate: datasource=custom.dump-syms depName=mozilla/dump_syms
 ARG DUMP_SYMS_VERSION=2.3.9
 ARG DUMP_SYMS_SHA256=0fc852a86b00337407d9d423cc388a24c3b489ccaaedcf92623cad57af5ca8ad
 
@@ -68,11 +71,12 @@ ENV CONAN_HOME=/cache/conan
 
 WORKDIR /work
 
-ARG INNO_SETUP_VERSION=7.0.2
+# renovate: datasource=custom.inno-setup depName=jrsoftware/issrc versioning=regex:^is-(?<major>\d+)_(?<minor>\d+)_(?<patch>\d+)$
 ARG INNO_SETUP_TAG=is-7_0_2
 ARG INNO_SETUP_SHA256=5ad54ca3def786f8f4212552e54cc6d8d61329e2d24a1cfee0571d42c2684ff1
 
 RUN \
+  INNO_SETUP_VERSION="$(printf '%s' "${INNO_SETUP_TAG#is-}" | tr _ .)" && \
   curl -fL --retry 3 \
     "https://github.com/jrsoftware/issrc/releases/download/${INNO_SETUP_TAG}/innosetup-${INNO_SETUP_VERSION}-x64.exe" \
     -o /tmp/inno.exe && \
@@ -89,6 +93,7 @@ RUN chmod +x /usr/local/bin/iscc
 ENV WINEDEBUG=-all
 ENV WINEPREFIX=/cache/wine
 
+# renovate: datasource=custom.protoc depName=protocolbuffers/protobuf
 ARG PROTOC_VERSION=35.1
 ARG PROTOC_SHA256=6930ebf62bd4ea607b98fff052596c6ee564b9835b4ce172c75a3f53ae9d91b7
 RUN \

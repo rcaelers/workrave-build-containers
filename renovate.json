@@ -1,0 +1,118 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^(windows-conan|windows-msys2|llvm-mingw)/Dockerfile$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)(?: versioning=(?<versioning>\\S+))?\\r?\\nARG \\w+=(?<currentValue>[^\\s]+)(?:\\r?\\nARG \\w+_SHA256=(?<currentDigest>[a-f0-9]{64}))?"
+      ],
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^(windows-conan|windows-msys2)/[^/]+\\.ps1$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)(?: versioning=(?<versioning>\\S+))?\\r?\\n\\$\\w+ = '(?<currentValue>[^']+)'\\r?\\n\\$\\w+Sha256 = '(?<currentDigest>[a-f0-9]{64})'"
+      ],
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}"
+    }
+  ],
+  "customDatasources": {
+    "llvm-mingw-windows": {
+      "defaultRegistryUrlTemplate": "https://api.github.com/repos/{{{packageName}}}/releases?per_page=100",
+      "transformTemplates": [
+        "{\"releases\": [$[draft = false and prerelease = false].($release := $; $version := tag_name; assets[name = ('llvm-mingw-' & $version & '-ucrt-x86_64.zip') and $contains($string(digest), /^sha256:[a-f0-9]{64}$/)].{\"version\": $version, \"digest\": $substring(digest, 7), \"releaseTimestamp\": $release.published_at})], \"sourceUrl\": \"https://github.com/{{{packageName}}}\"}"
+      ]
+    },
+    "llvm-mingw-linux": {
+      "defaultRegistryUrlTemplate": "https://api.github.com/repos/{{{packageName}}}/releases?per_page=100",
+      "transformTemplates": [
+        "{\"releases\": [$[draft = false and prerelease = false].($release := $; $version := tag_name; assets[name = ('llvm-mingw-' & $version & '-ucrt-ubuntu-22.04-x86_64.tar.xz') and $contains($string(digest), /^sha256:[a-f0-9]{64}$/)].{\"version\": $version, \"digest\": $substring(digest, 7), \"releaseTimestamp\": $release.published_at})], \"sourceUrl\": \"https://github.com/{{{packageName}}}\"}"
+      ]
+    },
+    "cmake-windows": {
+      "defaultRegistryUrlTemplate": "https://api.github.com/repos/{{{packageName}}}/releases?per_page=100",
+      "transformTemplates": [
+        "{\"releases\": [$[draft = false and prerelease = false].($release := $; $version := $substring(tag_name, 1); assets[name = ('cmake-' & $version & '-windows-x86_64.zip') and $contains($string(digest), /^sha256:[a-f0-9]{64}$/)].{\"version\": $version, \"digest\": $substring(digest, 7), \"releaseTimestamp\": $release.published_at})], \"sourceUrl\": \"https://github.com/{{{packageName}}}\"}"
+      ]
+    },
+    "ninja-windows": {
+      "defaultRegistryUrlTemplate": "https://api.github.com/repos/{{{packageName}}}/releases?per_page=100",
+      "transformTemplates": [
+        "{\"releases\": [$[draft = false and prerelease = false].($release := $; $version := $substring(tag_name, 1); assets[name = ('ninja-win.zip') and $contains($string(digest), /^sha256:[a-f0-9]{64}$/)].{\"version\": $version, \"digest\": $substring(digest, 7), \"releaseTimestamp\": $release.published_at})], \"sourceUrl\": \"https://github.com/{{{packageName}}}\"}"
+      ]
+    },
+    "git-windows": {
+      "defaultRegistryUrlTemplate": "https://api.github.com/repos/{{{packageName}}}/releases?per_page=100",
+      "transformTemplates": [
+        "{\"releases\": [$[draft = false and prerelease = false].($release := $; $version := tag_name; assets[name = ('MinGit-' & $replace($replace($substring($version, 1), /\\.windows\\.1$/, ''), '.windows.', '.') & '-64-bit.zip') and $contains($string(digest), /^sha256:[a-f0-9]{64}$/)].{\"version\": $version, \"digest\": $substring(digest, 7), \"releaseTimestamp\": $release.published_at})], \"sourceUrl\": \"https://github.com/{{{packageName}}}\"}"
+      ]
+    },
+    "inno-setup": {
+      "defaultRegistryUrlTemplate": "https://api.github.com/repos/{{{packageName}}}/releases?per_page=100",
+      "transformTemplates": [
+        "{\"releases\": [$[draft = false and prerelease = false].($release := $; $version := tag_name; assets[name = ('innosetup-' & $replace($substring($version, 3), '_', '.') & '-x64.exe') and $contains($string(digest), /^sha256:[a-f0-9]{64}$/)].{\"version\": $version, \"digest\": $substring(digest, 7), \"releaseTimestamp\": $release.published_at})], \"sourceUrl\": \"https://github.com/{{{packageName}}}\"}"
+      ]
+    },
+    "gettext-windows": {
+      "defaultRegistryUrlTemplate": "https://api.github.com/repos/{{{packageName}}}/releases?per_page=100",
+      "transformTemplates": [
+        "{\"releases\": [$[draft = false and prerelease = false].($release := $; $version := tag_name; assets[name = ('gettext' & $replace($substring($version, 1), '-v', '-iconv') & '-static-64.zip') and $contains($string(digest), /^sha256:[a-f0-9]{64}$/)].{\"version\": $version, \"digest\": $substring(digest, 7), \"releaseTimestamp\": $release.published_at})], \"sourceUrl\": \"https://github.com/{{{packageName}}}\"}"
+      ]
+    },
+    "msys2": {
+      "defaultRegistryUrlTemplate": "https://api.github.com/repos/{{{packageName}}}/releases?per_page=100",
+      "transformTemplates": [
+        "{\"releases\": [$[draft = false and prerelease = false].($release := $; $version := tag_name; assets[name = ('msys2-base-x86_64-' & $replace($version, '-', '') & '.sfx.exe') and $contains($string(digest), /^sha256:[a-f0-9]{64}$/)].{\"version\": $version, \"digest\": $substring(digest, 7), \"releaseTimestamp\": $release.published_at})], \"sourceUrl\": \"https://github.com/{{{packageName}}}\"}"
+      ]
+    },
+    "dump-syms": {
+      "defaultRegistryUrlTemplate": "https://api.github.com/repos/{{{packageName}}}/releases?per_page=100",
+      "transformTemplates": [
+        "{\"releases\": [$[draft = false and prerelease = false].($release := $; $version := $substring(tag_name, 1); assets[name = ('dump_syms-x86_64-unknown-linux-gnu.tar.xz') and $contains($string(digest), /^sha256:[a-f0-9]{64}$/)].{\"version\": $version, \"digest\": $substring(digest, 7), \"releaseTimestamp\": $release.published_at})], \"sourceUrl\": \"https://github.com/{{{packageName}}}\"}"
+      ]
+    },
+    "protoc": {
+      "defaultRegistryUrlTemplate": "https://api.github.com/repos/{{{packageName}}}/releases?per_page=100",
+      "transformTemplates": [
+        "{\"releases\": [$[draft = false and prerelease = false].($release := $; $version := $substring(tag_name, 1); assets[name = ('protoc-' & $version & '-linux-x86_64.zip') and $contains($string(digest), /^sha256:[a-f0-9]{64}$/)].{\"version\": $version, \"digest\": $substring(digest, 7), \"releaseTimestamp\": $release.published_at})], \"sourceUrl\": \"https://github.com/{{{packageName}}}\"}"
+      ]
+    },
+    "python-windows": {
+      "defaultRegistryUrlTemplate": "https://www.python.org/api/v2/downloads/release_file/?name=Windows%20embeddable%20package%20(64-bit)",
+      "transformTemplates": [
+        "{\"releases\": [$[$contains($string(sha256_sum), /^[a-f0-9]{64}$/) and $contains(url, /\\/python-[0-9]+\\.[0-9]+\\.[0-9]+-embed-amd64\\.zip$/)].{\"version\": $substringBefore($substringAfter(url, \"/ftp/python/\"), \"/\"), \"digest\": sha256_sum}], \"sourceUrl\": \"https://github.com/python/cpython\"}"
+      ]
+    }
+  },
+  "packageRules": [
+    {
+      "description": "Keep the Windows compiler and Linux Conan SDK compiler together.",
+      "matchDepNames": [
+        "mstorsjo/llvm-mingw"
+      ],
+      "groupName": "llvm-mingw toolchains"
+    },
+    {
+      "matchDepNames": [
+        "jrsoftware/issrc"
+      ],
+      "groupName": "Inno Setup"
+    },
+    {
+      "matchDepNames": [
+        "rust-lang/rust",
+        "docker.io/library/rust"
+      ],
+      "groupName": "Rust toolchains"
+    }
+  ]
+}

@@ -3,6 +3,8 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2025
 SHELL ["powershell", "-NoProfile", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Match the compiler that builds the locked Conan packages on Linux.
+# renovate: datasource=github-releases depName=rust-lang/rust
+ARG RUST_VERSION=1.98.1
 COPY install-tools.ps1 C:/image/install-tools.ps1
 RUN & C:/image/install-tools.ps1
 
