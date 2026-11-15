@@ -38,9 +38,6 @@ RUN \
     pkg-config \
     python3 \
     python3-venv \
-    wine \
-    xauth \
-    xvfb \
     xz-utils && \
   rm -rf /var/lib/apt/lists/*
 
@@ -71,28 +68,6 @@ ENV CONAN_HOME=/cache/conan
 
 WORKDIR /work
 
-# renovate: datasource=custom.inno-setup depName=jrsoftware/issrc versioning=regex:^is-(?<major>\d+)_(?<minor>\d+)_(?<patch>\d+)$
-ARG INNO_SETUP_TAG=is-7_0_2
-ARG INNO_SETUP_SHA256=5ad54ca3def786f8f4212552e54cc6d8d61329e2d24a1cfee0571d42c2684ff1
-
-RUN \
-  INNO_SETUP_VERSION="$(printf '%s' "${INNO_SETUP_TAG#is-}" | tr _ .)" && \
-  curl -fL --retry 3 \
-    "https://github.com/jrsoftware/issrc/releases/download/${INNO_SETUP_TAG}/innosetup-${INNO_SETUP_VERSION}-x64.exe" \
-    -o /tmp/inno.exe && \
-  echo "${INNO_SETUP_SHA256}  /tmp/inno.exe" | sha256sum -c - && \
-  WINEPREFIX=/tmp/wine-inno WINEDEBUG=-all xvfb-run -a \
-    wine /tmp/inno.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /ALLUSERS '/DIR=Z:\\opt\\inno' && \
-  test -f /opt/inno/ISCC.exe && \
-  rm /tmp/inno.exe
-
-RUN rm -rf /tmp/wine-inno
-
-COPY iscc /usr/local/bin/iscc
-RUN chmod +x /usr/local/bin/iscc
-ENV WINEDEBUG=-all
-ENV WINEPREFIX=/cache/wine
-
 # renovate: datasource=custom.protoc depName=protocolbuffers/protobuf
 ARG PROTOC_VERSION=35.1
 ARG PROTOC_SHA256=6930ebf62bd4ea607b98fff052596c6ee564b9835b4ce172c75a3f53ae9d91b7
@@ -104,9 +79,6 @@ RUN \
   python3 -c "import zipfile; zipfile.ZipFile('/tmp/protoc.zip').extractall('/opt/protoc')" && \
   chmod +x /opt/protoc/bin/protoc && \
   rm /tmp/protoc.zip
-
-RUN mkdir -m 700 /tmp/wine-runtime
-ENV XDG_RUNTIME_DIR=/tmp/wine-runtime
 
 # Conan's libxml2 recipe names this Windows SDK import library Bcrypt.
 # Provide its canonical Windows spelling on Linux's case-sensitive filesystem.
