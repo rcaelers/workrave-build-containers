@@ -68,18 +68,6 @@ ENV CONAN_HOME=/cache/conan
 
 WORKDIR /work
 
-# renovate: datasource=custom.protoc depName=protocolbuffers/protobuf
-ARG PROTOC_VERSION=35.1
-ARG PROTOC_SHA256=6930ebf62bd4ea607b98fff052596c6ee564b9835b4ce172c75a3f53ae9d91b7
-RUN \
-  curl -fL --retry 3 \
-    "https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-linux-x86_64.zip" \
-    -o /tmp/protoc.zip && \
-  echo "${PROTOC_SHA256}  /tmp/protoc.zip" | sha256sum -c - && \
-  python3 -c "import zipfile; zipfile.ZipFile('/tmp/protoc.zip').extractall('/opt/protoc')" && \
-  chmod +x /opt/protoc/bin/protoc && \
-  rm /tmp/protoc.zip
-
 # Conan's libxml2 recipe names this Windows SDK import library Bcrypt.
 # Provide its canonical Windows spelling on Linux's case-sensitive filesystem.
 RUN \
